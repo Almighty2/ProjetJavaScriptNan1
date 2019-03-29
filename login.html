@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html5 validation - Jssor Slider</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="libraries/uploadify/uploadify.css">
+    <!-- Bullet Navigator Style -->
+    <!-- Help: https://www.jssor.com/development/slider-with-bullet-navigator.html -->
+    <style>
+        .jssorb051 .i {position:absolute;cursor:pointer;}
+        .jssorb051 .i .b {fill:#fff;fill-opacity:0.5;stroke:#000;stroke-width:400;stroke-miterlimit:10;stroke-opacity:0.5;}
+        .jssorb051 .i:hover .b {fill-opacity:.7;}
+        .jssorb051 .iav .b {fill-opacity: 1;}
+        .jssorb051 .i.idn {opacity:.3;}
+    </style>
+
+    <!--#region Arrow Navigator Skin -->
+    <!-- Help: https://www.jssor.com/development/slider-with-arrow-navigator.html -->
+    <style>
+        .jssora051 {display:block;position:absolute;cursor:pointer;}
+        .jssora051 .a {fill:none;stroke:#fff;stroke-width:360;stroke-miterlimit:10;}
+        .jssora051:hover {opacity:.8;}
+        .jssora051.jssora051dn {opacity:.5;}
+        .jssora051.jssora051ds {opacity:.3;pointer-events:none;}
+    </style>
+</head>
+<body style="padding:0px; margin:0px; font-family:Arial, Verdana;background-color:#fff;">
+    <!--
+        Given a demo 'demos\full-width-slider.html'
+        Go through following steps to transform jssor slider compatible with w3c standards and pass html5 validation.
+
+        #1. Move styles inside 'head' tag
+        #2. Add alt="" for all 'img' tag
+        #3. Add 'data-' prefix for all custom attributes. e.g. data-u="image" -> data-u="image"
+    -->
+
+    <!-- Jssor Slider Begin -->
+    <script type="text/javascript" src="assets/js/jssor.slider.min.js"></script>
+    <script>
+        jssor_slider1_init = function () {
+            var options = {
+                $FillMode: 2,                                       //[Optional] The way to fill image in slide, 0 stretch, 1 contain (keep aspect ratio and put all inside slide), 2 cover (keep aspect ratio and cover whole slide), 4 actual size, 5 contain for large image, actual size for small image, default value is 0
+                $AutoPlay: 1,                                    //[Optional] Auto play or not, to enable slideshow, this option must be set to greater than 0. Default value is 0. 0: no auto play, 1: continuously, 2: stop at last slide, 4: stop on click, 8: stop on user navigation (by arrow/bullet/thumbnail/drag/arrow key navigation)
+                $Idle: 4000,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                $PauseOnHover: 1,                                   //[Optional] Whether to pause when mouse over if a slider is auto playing, 0 no pause, 1 pause for desktop, 2 pause for touch device, 3 pause for desktop and touch device, 4 freeze for desktop, 8 freeze for touch device, 12 freeze for desktop and touch device, default value is 1
+
+                $ArrowKeyNavigation: 1,                         //[Optional] Steps to go for each navigation request by pressing arrow key, default value is 1.
+                $SlideEasing: $Jease$.$OutQuint,          //[Optional] Specifies easing for right to left animation, default value is $Jease$.$OutQuad
+                $SlideDuration: 1200,                                //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                $MinDragOffsetToSlide: 20,                          //[Optional] Minimum drag offset to trigger slide, default value is 20
+                //$SlideWidth: 600,                                 //[Optional] Width of every slide in pixels, default value is width of 'slides' container
+                //$SlideHeight: 300,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
+                $SlideSpacing: 0,                                   //[Optional] Space between each slide in pixels, default value is 0
+                $UISearchMode: 1,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
+                $PlayOrientation: 1,                                //[Optional] Orientation to play slide (for auto play, navigation), 1 horizental, 2 vertical, 5 horizental reverse, 6 vertical reverse, default value is 1
+                $DragOrientation: 1,                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $Cols is greater than 1, or parking position is not 0)
+                
+                $BulletNavigatorOptions: {                                //[Optional] Options to specify and enable navigator or not
+                    $Class: $JssorBulletNavigator$,                       //[Required] Class to create navigator instance
+                    $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                    $Steps: 1,                                      //[Optional] Steps to go for each navigation request, default value is 1
+                    $Rows: 1,                                      //[Optional] Specify lanes to arrange items, default value is 1
+                    $SpacingX: 8,                                   //[Optional] Horizontal space between each item in pixel, default value is 0
+                    $SpacingY: 8,                                   //[Optional] Vertical space between each item in pixel, default value is 0
+                    $Orientation: 1                                 //[Optional] The orientation of the navigator, 1 horizontal, 2 vertical, default value is 1
+                },
+
+                $ArrowNavigatorOptions: {                       //[Optional] Options to specify and enable arrow navigator or not
+                    $Class: $JssorArrowNavigator$,              //[Requried] Class to create arrow navigator instance
+                    $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                    $Steps: 1                                       //[Optional] Steps to go for each navigation request, default value is 1
+                }
+            };
+
+            var jssor_slider1 = new $JssorSlider$('slider1_container', options);
+
+            /*#region responsive code begin*/
+            //you can remove responsive code if you don't want the slider scales while window resizing
+            function ScaleSlider() {
+                var bodyWidth = document.body.clientWidth;
+                if (bodyWidth)
+                    jssor_slider1.$ScaleWidth(Math.min(bodyWidth, 1920));
+                else
+                    $Jssor$.$Delay(ScaleSlider, 30);
+            }
+
+            ScaleSlider();
+            $Jssor$.$AddEvent(window, "load", ScaleSlider);
+
+            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+            /*#endregion responsive code end*/
+        };
+    </script>
+
+    <div class="navbar navbar-inverse mb-4" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Garba Zegen</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="animation.html">Qui sommes nous ?</a> </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                     <li class=""><a href="recette.html">Recette</a></li>
+                     <li class=""><a href="dossier_cv.php">Horaires</a></li>
+                     <li class=""><a href="login.html">login</a></li>
+                     <li class=""><a href="register.html">Inscription</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+    <script src="app.js"></script>
+
+<div class='container'>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="well">
+
+                <!-- sample form1 -->
+                <form id="form" method="POST">
+                    <feildset>
+                        <div class="form-group">
+                            <label class="control-label">Email:</label>
+                            <input data-title="Please use valid Email address" id="email" name="email" class="form-control" data-require="" placeholder="Subscriber email" data-regex="email" required/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Password:</label>
+                            <input data-title="Please enter valid password" id="password" required name="password" class="form-control" placeholder="Subscriber password" required/>
+                        </div>
+                        <div class="alert alert-danger">
+
+                        </div>
+                        <div class="form-group text-center">
+                            <button class="btn btn-default" type="submit">Submit</button>
+                        </div>
+                    </feildset>
+                </form>
+
+
+            </div>
+        </div>
+       
+    </div>
+
+</div>
+
+
+       <script src="assets/js/jquery-3.3.1.min.js"></script>
+       <script src="librairies/uploadify/jquery.uploadify.min.js"></script>
+       <script src="assets/js/bootstrap.min.js"></script>
+       <script src="assets/js/bootstrap.validator.js"></script>
+       <script src="assets/js/jssor.slider.min.js"></script>
+
+</body>
+</html> 
